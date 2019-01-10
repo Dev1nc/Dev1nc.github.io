@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="丁浩瀚 博客">
+  
+  
+    <meta name="description" content="丁浩瀚的博客">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    学习ES6模块化的过程 |
+    
+    丁大善人的博客</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-学习ES6模块化的过程" class="article article-type-post" itemscope="" itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      学习ES6模块化的过程
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/01/08/学习ES6模块化的过程/" class="article-date">
+  <time datetime="2019-01-08T10:17:48.000Z" itemprop="datePublished">2019-01-08</time>
+</a>
+        
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <h1 id="学习ES6的过程"><a href="#学习ES6的过程" class="headerlink" title="学习ES6的过程"></a>学习ES6的过程</h1><h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><h3 id="什么是模块"><a href="#什么是模块" class="headerlink" title="什么是模块"></a>什么是模块</h3><a id="more"></a>
+<p>模块是运行在严格模式下并且没有办法退出运行的JavaScript代码。与共享一切架构相反的是，在模块的顶部创建的变量不会被添加到全局共享作用域，这个变量仅在模块的顶级作用域中存在，而且模块必须导出一些外部代码可以访问的内容，如变量或函数。模块也可以从其他模块导入绑定。<br>另外两个模块的特性与作用域关系不大，但也很重要。首先，在模块的顶部，this的值是undefined；其次，模块不支持HTML风格的代码注释，这是从早期浏览器遗留下来的JavaScript特性。脚本，也就是任何不属于模块的JavaScript代码，则缺少这些特性。模块和其他JavaScript代码之间的差异可能乍一看不明显，但是它们代表了JavaScript代码加载和求值的一个重要变化。模块真正的魔力所在是仅导出和导入你需要的绑定，而不是将所有东西放到一个文件。只有很好地理解了导出和导入才能理解模块与脚本的区别。</p>
+<h3 id="导出的基本语法"><a href="#导出的基本语法" class="headerlink" title="导出的基本语法"></a>导出的基本语法</h3><p>使用export关键字可以将模块中的一部分内容暴露给其他模块，在最简单的例子中，我们只需要将export关键字放在任何变量、函数或类声明之前，就可以将它们从模块导出，如下所示：</p>
+<h4 id="导出数据"><a href="#导出数据" class="headerlink" title="导出数据"></a>导出数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export var color = &apos;red&apos;;</span><br><span class="line">export let name = &apos;&apos;;</span><br><span class="line">export const magicNumber = 7;</span><br></pre></td></tr></table></figure>
+<h4 id="导出函数"><a href="#导出函数" class="headerlink" title="导出函数"></a>导出函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export function sum(num1, num2) &#123;</span><br><span class="line">return num1 + num2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export function subtract(num1, num2) &#123;</span><br><span class="line">return num1 - num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="导出类"><a href="#导出类" class="headerlink" title="导出类"></a>导出类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export class Rectangle &#123;</span><br><span class="line">constructor(length, width) &#123;</span><br><span class="line">this.length = length;</span><br><span class="line">this.width = width;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="私有函数"><a href="#私有函数" class="headerlink" title="私有函数"></a>私有函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function divide(num1, num2) &#123;</span><br><span class="line">return num1 / num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="先定义一个函数"><a href="#先定义一个函数" class="headerlink" title="先定义一个函数"></a>先定义一个函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function multiply(num1, num2) &#123;</span><br><span class="line">return num1 * num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="然后将它导出"><a href="#然后将它导出" class="headerlink" title="然后将它导出"></a>然后将它导出</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export &#123;multiply&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong><br>注意：我们在定义multiply()函数时，并没有立即导出它。由于不必总是导出声明，也可以导出引用，因此这段代码可以正常运行。此外，例子中并未导出subtract()函数，任何未显式导出的变量、函数或类都是模块私有的，无法从模块外部访问。<br>导入的基本语法<br>从模块中导出的功能可以通过import关键字在另一个模块中访问，import语句由两部分组成：要导入的标识符和标识符应当从哪个模块导入。
+</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123; sum, subtract &#125; from &quot;./example.js&quot;</span><br></pre></td></tr></table></figure></p>
+<p>import后面的大括号表示从给定模块导入的绑定，关键字form表示从哪个模块导入给定的绑定，该模块由表示模块路径的字符串指定（也被称为模块说明符）。浏览器使用的路径格式与传给<code>&lt;script&gt;</code>元素的相同，也就是说，必须把文件扩展名也加上。</p>
+<p><strong>注意：导入绑定的列表看起来与解构对象很相似，但它不是。</strong></p>
+<p>当从模块中导入一个绑定时，它就好像是使用const定义的常量一样，这也就意味着你不能定义另一个同名变量（包括导入另一个同名绑定），也不能在import语句之前使用标识符或改变绑定的值。<br>导入单个绑定<br>假设前面的示例在一个名为example.js的模块中，我们可以导入并使用这个模块中的绑定。例如，可以只导入一个标识符：</p>
+<h4 id="只导入一个"><a href="#只导入一个" class="headerlink" title="只导入一个"></a>只导入一个</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import &#123; sum &#125; from &quot;./example.js&quot;</span><br><span class="line"></span><br><span class="line">console.log(sum(1, 2)); // 3</span><br><span class="line"></span><br><span class="line">sum = 1;  // 抛出错误</span><br></pre></td></tr></table></figure>
+<p>尽管example.js导出的函数不止一个，但这个示例却只导入了一个sum()函数。如果尝试给sum重新赋值，结果是抛出一个错误，因为不能给导入的绑定重新赋值。<br>导入多个绑定<br>如果你想从示例模块中导入多个绑定，则可以明确地将它们列出如下：</p>
+<h3 id="导入多个"><a href="#导入多个" class="headerlink" title="导入多个"></a>导入多个</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#123; sum, multiply, subtract &#125; from &quot;./example.js&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">console.log(sum(1, 2));      // 3</span><br><span class="line">console.log(multiply(3, 2)); // 6</span><br><span class="line">console.log(subtract(6, 2)); // 4</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，从example模块导入3个绑定：sum、multiply、subtract之后使用它们，就像它们在本模块中定义的一样。<br>导入整个模块<br>特殊情况下，可以导入整个模块作为一个单一对象，然后所有的导出都可以作为对象的属性使用。例如：</p>
+<h4 id="导入所有example模块导出的内容"><a href="#导入所有example模块导出的内容" class="headerlink" title="导入所有example模块导出的内容"></a>导入所有example模块导出的内容</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import * as example from &quot;./example.js&quot;</span><br><span class="line"></span><br><span class="line">console.log(example.sum(1, 2));      // 3</span><br><span class="line">console.log(example.multiply(3, 2)); // 6</span><br><span class="line">console.log(example.subtract(6, 2)); // 4</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，从example.js中导出的所有绑定被加载到一个被称作examplede 对象中。被导出的内容作为example对象的属性存在。这种导入格式被称作命名空间导入。因为example.js文件中不存在example对象，故而它作为example.js中所有导出成员的命名空间而被创建。</p>
+<p>但是，请记住，不管在import语句中把一个模块写了多少次，该模块将只执行一次。导入模块的代码执行后，实例化过的模块被保存在内存中，只要另一个import语句引用它就可以重复使用它。思考以下几点：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#123; sum &#125; from &quot;./example.js&quot;</span><br><span class="line">import &#123; subtract &#125; from &quot;./example.js&quot;</span><br><span class="line">import &#123; magicNumber &#125; from &quot;./example.js&quot;</span><br></pre></td></tr></table></figure></p>
+<p>尽管在这个模块中有3个import语句，但example.js将只执行一次。如果同一个应用程序中的其他模块也从example.js导入绑定，那么那些模块与此代码将使用相同的模块实例。</p>
+<p>导出和导入时重命名<br>有时候，从一个模块导入变量、函数或者类时，我们可能不希望使用它们原来的名称。幸运的是，可以在导出过程和导入过程中改变导出元素的名称。</p>
+<p>在第一种情况中，假设要使用不同的名称导出一个函数，则可以用as关键字来指定函数在模块外应该被称为什么名称。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function sum(num1, num2) &#123;</span><br><span class="line">return num1 + num2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 导出时重命名</span><br><span class="line">export &#123;sum as add&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在这里，函数sum()是原始名称，add()是导出时使用的名称。也就是说，当另一个模块要导入这个函数时，必须使用add这个名称：<br><code>import {add} from &#39;./example.js&#39;</code><br>如果模块想使用不同的名称来导入函数，也可以使用as关键字：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import &#123;add as divide&#125; from &apos;./example.js&apos;</span><br><span class="line"></span><br><span class="line">console.log(typeof add); // undefined</span><br><span class="line">console.log(divide(2, 3)); // 5</span><br></pre></td></tr></table></figure></p>
+<p>这段代码导入add()函数时使用divide()名称来重命名add()函数。导入时改变了函数的原始名称意味着即使模块导入了add()函数，在当前模块中也没有add()标识符。</p>
+<p>模块的默认值<br>由于在诸如CommonJS（浏览器外的另一个JavaScript使用规范）的其他模块系统中，从模块中导出和导入默认值是一个常见的做法，该语法被进行了优化。模块的默认值指的是通过default关键字指定的单个变量、函数或类，只能为每个模块设置一个默认的导出值，导出时多次使用default关键字会出现语法错误。<br>导出默认值<br>下面是一个使用default关键字的简单示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export default function(num1, num2) &#123;</span><br><span class="line">return num1 + num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个模块导出一个函数作为它的默认值，default关键字表示这是一个默认的导出，由于函数被模块所代表，因而它不需要一个名称。</p>
+<p>也可以在export default之后添加默认导出值的标识符，像下面这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function sum(num1, num2) &#123;</span><br><span class="line">return num1 + num2;</span><br><span class="line">&#125;</span><br><span class="line">export default sum;</span><br></pre></td></tr></table></figure></p>
+<p>先定义sum()函数，然后再将其导出为默认值，如果需要计算默认值，则可以使用这种方式。</p>
+<p>为默认导出值指定标识符的第三种方法是使用重命名语法，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function sum(num1, num2) &#123;</span><br><span class="line">return num1 + num2;</span><br><span class="line">&#125;</span><br><span class="line">export &#123;sum as default&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>如果向在一条导出语句中同时指定多个导出（包括默认导出），这个语法非常有用。<br>导入默认值<br>可以使用以下语句从一个模块导入一个默认值：</p>
+<h4 id="导入默认值"><a href="#导入默认值" class="headerlink" title="导入默认值"></a>导入默认值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import sum from &apos;./example.js&apos;</span><br><span class="line">console.log(sum(2, 3)); // 5</span><br></pre></td></tr></table></figure>
+<p>这条import语句从模块example.js中导入了默认值，请注意，这里的导入语句并没有使用大括号。</p>
+<p>对于导出默认值和一个或多个非默认绑定的模块，可以用一条语句导入所有导出的绑定。例如，假设有以下这个模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export var color = &apos;red&apos;;</span><br><span class="line">export default function(num1, num2) &#123;</span><br><span class="line">return num1 + num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以用下面这条import语句导入color和默认函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import sum, &#123; color &#125; from &apos;./example.js&apos;</span><br><span class="line">console.log(sum(1, 2)); // 3</span><br><span class="line">console.log(color);     // &apos;red&apos;</span><br></pre></td></tr></table></figure></p>
+<p>用逗号将默认导入与大括号中的非默认值导入分隔开，请记住，在import语句中，默认值必须排在非默认值之前。</p>
+<p>与导出默认值一样，也可以在导入默认值时使用重命名语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#123; default as sum, color &#125; from &apos;./example.js&apos;</span><br><span class="line">console.log(sum(1, 2)); // 3</span><br><span class="line">console.log(color); // &apos;red&apos;</span><br></pre></td></tr></table></figure></p>
+<p>在这段代码中，默认导出值被重命名为sum，并且还导入了color。这个例子与上个例子的作用相同。<br>重新导出一个绑定<br>最终，可能需要重新导出模块已经导入的内容。例如，你正在用几个小模块创建一个库，则可以用前面学的模块化规范重新导出已经导入的值，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 导入</span><br><span class="line">import &#123; sum &#125; from &quot;./example.js&quot;</span><br><span class="line">// 导出</span><br><span class="line">export &#123; sum &#125;</span><br></pre></td></tr></table></figure></p>
+<p>除了上面的写法，通过一条语句也可以完成同样的任务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export &#123; sum &#125; from &quot;./example.js&quot;</span><br></pre></td></tr></table></figure></p>
+<p>导出时重命名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export &#123; sum as add &#125; from &quot;./example.js&quot;</span><br></pre></td></tr></table></figure></p>
+<p>导出所有值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export * from &quot;./example.js&quot;</span><br></pre></td></tr></table></figure></p>
+<p>无绑定导入<br>某些模块可能不导出任何东西，它们可能只修改全局作用域中的对象。虽然模块中的顶层变量、函数和类不会自动出现在全局作用域中，但并不意味着模块无法访问全局作用域。内建对象（如Array和Object）可以在所有模块中访问，对这些对象所做的改变将会反应在其他模块中。</p>
+<p>例如，要向所有数组添加pushAll()方法，则可以定义一个myarray.js模块：</p>
+<h2 id="没有export或import的模块代码"><a href="#没有export或import的模块代码" class="headerlink" title="没有export或import的模块代码"></a>没有export或import的模块代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Array.prototype.pushAll = function(items) &#123;</span><br><span class="line">if(!Array.isArray(items)) &#123;</span><br><span class="line">throw new TypeError(&apos;参数必须是一个数组。&apos;)；</span><br><span class="line">&#125;</span><br><span class="line">return this.push(...items);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>即使没有任何导出或导入的操作，这也是一个有效的模块。由于它不导出任何东西，因此我们可以使用简化的导入操作来执行模块代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;./myarray.js&apos;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let colors = [&apos;red&apos;, &apos;green&apos;, &apos;blue&apos;];</span><br><span class="line">let items = [];</span><br><span class="line">items.pushAll(colors)</span><br></pre></td></tr></table></figure>
+<p>这段代码导入并执行了模块中包含的pushAll()方法，所以pushAll()被添加到了数组的原型，也就是说现在模块中的所有数组都可以用pushAll()方法了。</p>
+<h4 id="导出默认值的写法一"><a href="#导出默认值的写法一" class="headerlink" title="导出默认值的写法一"></a>导出默认值的写法一</h4><blockquote>
+<p>常用</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export default function divide(num1,num2)&#123;</span><br><span class="line">	return num1 /num2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="导出默认值的写法二"><a href="#导出默认值的写法二" class="headerlink" title="导出默认值的写法二"></a>导出默认值的写法二</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function divide(num1,num2)&#123;</span><br><span class="line">	return num1 /num2</span><br><span class="line">&#125;</span><br><span class="line">export deflaut divide</span><br></pre></td></tr></table></figure>
+<h4 id="导出默认值的写法三"><a href="#导出默认值的写法三" class="headerlink" title="导出默认值的写法三"></a>导出默认值的写法三</h4><p>function divide(num1,num2){<br>    return num1 /num2<br>}<br>export {divide as default}</p>
+<h4 id="导入默认值-1"><a href="#导入默认值-1" class="headerlink" title="导入默认值"></a>导入默认值</h4><p><strong> 不写在花括号中</strong> <code>import divide from &#39;/example.js&#39;</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/08/学习ES6模块化的过程/" data-id="cjqqdr9fj000fmkwo2xqu6mm0" class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/01/08/node的知识点一/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            node的知识点一
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/01/03/my-second-page/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">my second page</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2019 丁大善人的博客</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://zhwangart.github.io">zhwangart</a></li>
+      <!--
+      <li><a href="/">丁浩瀚</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="丁大善人的博客"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="丁浩瀚 博客">
+  
+  
+    <meta name="description" content="丁浩瀚的博客">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    gulp的用法 |
+    
+    丁大善人的博客</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-gulp的用法" class="article article-type-post" itemscope="" itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      gulp的用法
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/01/09/gulp的用法/" class="article-date">
+  <time datetime="2019-01-09T08:17:48.000Z" itemprop="datePublished">2019-01-09</time>
+</a>
+        
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <p><strong>1. 初始化项目，生成package.json文件</strong><br><code>npm init</code><br><a id="more"></a><br><strong>2. 全局安装gulp命令行工具，只需要安装一次，在任何目录都能使用gulp命令</strong><br><code>npm install gulp-cli --global</code></p>
+<p><strong>3. 本地安装gulp包，提供gulp的API方法，例如，task()，src()，dest()，watch()方法</strong><br><code>npm install gulp --save-dev</code></p>
+<p><strong>4. 创建gulp的配置文件，推荐使用gulpfile.js作为文件名。</strong></p>
+<p><strong>5. 使用gulp提供的API方法创建各种任务，例如，处理less文件，处理JS文件。</strong></p>
+<p><strong>6. 在创建各种任务时，会依赖其他的包，比如，<code>gulp-less，gulp-uglify</code>，因此我们需要事先安装这些包。</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp-less gulp-cssnano gulp-htmlmin gulp-uglify gulp-connect --save-dev</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>   gulp-less：将less文件内容编译成css内容。</p>
+</blockquote>
+<blockquote>
+<p>   gulp-cssnano：压缩css文件内容</p>
+</blockquote>
+<blockquote>
+<p>   gulp-htmlmin：压缩HTML文件内容</p>
+</blockquote>
+<blockquote>
+<p>   gulp-uglify：压缩混淆JS文件内容</p>
+</blockquote>
+<blockquote>
+<p>   gulp-connect：创建一个开发阶段所使用的服务器</p>
+</blockquote>
+<p><strong>7. 在gulpfile.js文件中引入并使用这些包创建各种任务</strong></p>
+<p><strong>以前的用法</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">var gulpLess = require(&apos;gulp-less&apos;);</span><br><span class="line">var mincss = require(&apos;gulp-cssnano&apos;);</span><br><span class="line">var uglify = require(&apos;gulp-uglify&apos;);</span><br><span class="line">var htmlmin = require(&apos;gulp-htmlmin&apos;);</span><br><span class="line">var connect = require(&apos;gulp-connect&apos;);</span><br><span class="line">// 当less文件发生改变时，编译成css，并放到当前目录下的css文件夹中</span><br><span class="line">// 最后刷新页面</span><br><span class="line">gulp.task(&apos;dev-less&apos;, function () &#123;</span><br><span class="line">// 获取less文件</span><br><span class="line">  gulp.src(&apos;src/less/*.less&apos;)</span><br><span class="line">  .pipe(gulpLess())</span><br><span class="line">  .pipe(gulp.dest(&apos;src/css&apos;))</span><br><span class="line">  .pipe(connect.reload());</span><br><span class="line">&#125;);</span><br><span class="line">// 当JS文件发生改变时刷新页面</span><br><span class="line">gulp.task(&apos;dev-script&apos;, function () &#123;</span><br><span class="line">  gulp.src(&apos;src/scripts/*.js&apos;)</span><br><span class="line">  .pipe(connect.reload());</span><br><span class="line">&#125;);</span><br><span class="line">// 当HTML文件发生改变时刷新页面</span><br><span class="line">gulp.task(&apos;dev-html&apos;, function () &#123;</span><br><span class="line">  gulp.src(&apos;src/htmls/*.html&apos;)</span><br><span class="line">  .pipe(connect.reload());</span><br><span class="line">&#125;);</span><br><span class="line">// 定义一个编译less文件的任务</span><br><span class="line">gulp.task(&apos;build-css&apos;, function () &#123;</span><br><span class="line">// 获取css文件</span><br><span class="line">  gulp.src(&apos;./src/css/*.css&apos;)</span><br><span class="line">  .pipe(mincss())</span><br><span class="line">  .pipe(gulp.dest(&apos;dist/css&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">// 定义一个处理JS文件的任务</span><br><span class="line">gulp.task(&apos;build-script&apos;, function () &#123;</span><br><span class="line">    gulp.src(&apos;src/scripts/*.js&apos;)</span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(gulp.dest(&apos;dist/js&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">// 定义一个处理HTML文件的任务</span><br><span class="line">gulp.task(&apos;build-html&apos;, function () &#123;</span><br><span class="line">  gulp.src(&apos;src/htmls/*.html&apos;)</span><br><span class="line">      .pipe(htmlmin(&#123; collapseWhitespace: true &#125;))</span><br><span class="line">      .pipe(gulp.dest(&apos;dist/pages&apos;));</span><br><span class="line">&#125;);</span><br><span class="line">// 定义监视资源文件改变的任务</span><br><span class="line">gulp.task(&apos;watch&apos;, function () &#123;</span><br><span class="line">gulp.watch(&apos;src/htmls/*.html&apos;, [&apos;dev-html&apos;]);</span><br><span class="line">gulp.watch(&apos;src/less/*.less&apos;, [&apos;dev-less&apos;]);</span><br><span class="line">gulp.watch(&apos;src/scripts/*.js&apos;, [&apos;dev-script&apos;]);</span><br><span class="line">&#125;);</span><br><span class="line">// 定义开启服务的任务</span><br><span class="line">gulp.task(&apos;serve&apos;, function () &#123;</span><br><span class="line">  connect.server(&#123;</span><br><span class="line">    root: &apos;src&apos;,</span><br><span class="line">    port: 8080,</span><br><span class="line">    livereload: true,</span><br><span class="line">    index: &apos;htmls/index.html&apos;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">gulp.task(&apos;dev&apos;, [&apos;serve&apos;, &apos;watch&apos;]);</span><br><span class="line">gulp.task(&apos;default&apos;, [&apos;dev&apos;]);</span><br><span class="line">gulp.task(&apos;build&apos;, [&apos;build-css&apos;, &apos;build-script&apos;, &apos;build-html&apos;]);</span><br></pre></td></tr></table></figure></p>
+<p><strong>现在的用法</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">const &#123;src,dest,series,watch&#125; = require(&apos;gulp&apos;)</span><br><span class="line">const uglify = require(&apos;gulp-uglify&apos;)</span><br><span class="line">const htmlmin = require(&apos;gulp-htmlmin&apos;)</span><br><span class="line">const cleancss = require(&apos;gulp-clean-css&apos;)</span><br><span class="line">const connect =require(&apos;gulp-connect&apos;)</span><br><span class="line">//创建一个任务</span><br><span class="line">function task1(callback)&#123;</span><br><span class="line">	console.log(&quot;执行task1&quot;)</span><br><span class="line">	callback()</span><br><span class="line">&#125;</span><br><span class="line">exports.task1 = task1</span><br><span class="line"></span><br><span class="line">//处理html文件的任务</span><br><span class="line">function html()&#123;</span><br><span class="line">	return src(&apos;src/*.html&apos;)</span><br><span class="line">			.pipe(htmlmin(&#123;collapseWhitespace:true&#125;))</span><br><span class="line">			.pipe(dest(&apos;dist/&apos;))</span><br><span class="line">			.pipe(connect.reload())</span><br><span class="line">&#125;</span><br><span class="line">exports.html = html</span><br><span class="line"></span><br><span class="line">//处理JS的任务</span><br><span class="line">function script(callback)&#123;</span><br><span class="line">	return src(&apos;src/js/*.js&apos;)</span><br><span class="line">		.pipe(uglify())</span><br><span class="line">		.pipe(dest(&apos;dist/js/&apos;))</span><br><span class="line">		.pipe(connect.reload())</span><br><span class="line">	callback()</span><br><span class="line">&#125;</span><br><span class="line">exports.script = script</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//处理css的任务</span><br><span class="line">function css(callback)&#123;</span><br><span class="line">	return src(&apos;src/*.css&apos;)</span><br><span class="line">		.pipe(cleancss())</span><br><span class="line">		.pipe(dest(&apos;dist/&apos;))</span><br><span class="line">		.pipe(connect.reload())</span><br><span class="line">	callback()</span><br><span class="line">&#125;</span><br><span class="line">exports.css = css</span><br><span class="line"></span><br><span class="line">//监听文件的改变</span><br><span class="line">function watchFile(cb)&#123;</span><br><span class="line">	watch(&apos;src/index.html&apos;,series(&apos;html&apos;))</span><br><span class="line">	watch(&apos;src/style.css&apos;,series(&apos;css&apos;))</span><br><span class="line">	watch(&apos;src/js/index.js&apos;,series(&apos;script&apos;))</span><br><span class="line">//	watch([&apos;src/js/*.js&apos;,&apos;src/*.css&apos;,&apos;src/*.html&apos;],series(&apos;html&apos;,&apos;css&apos;,&apos;script&apos;))</span><br><span class="line">	cb();</span><br><span class="line">&#125;</span><br><span class="line">exports.watch = watchFile</span><br><span class="line"></span><br><span class="line">//创建服务器</span><br><span class="line">function server(cb)&#123;</span><br><span class="line">	connect.server(&#123;</span><br><span class="line">		root:&apos;dist&apos;,</span><br><span class="line">		port:8080,</span><br><span class="line">		livereload:true</span><br><span class="line">	&#125;)</span><br><span class="line">	cb()</span><br><span class="line">&#125;</span><br><span class="line">exports.default = series(server,watchFile)</span><br><span class="line">//exports.dev = series(server,watchFile)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/09/gulp的用法/" data-id="cjqqdr9ej0001mkwoh1ua9eld" class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gulp/">gulp</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/01/10/使用npm管理其他的包/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            使用npm管理其他的包
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/01/08/node的知识点一/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">node的知识点一</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2019 丁大善人的博客</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://zhwangart.github.io">zhwangart</a></li>
+      <!--
+      <li><a href="/">丁浩瀚</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="丁大善人的博客"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>

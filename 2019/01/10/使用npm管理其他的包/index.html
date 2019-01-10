@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+    <meta name="keywords" content="丁浩瀚 博客">
+  
+  
+    <meta name="description" content="丁浩瀚的博客">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    使用npm管理其他的包 |
+    
+    丁大善人的博客</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-使用npm管理其他的包" class="article article-type-post" itemscope="" itemprop="blogPost">
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用npm管理其他的包
+    </h1>
+  
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/01/10/使用npm管理其他的包/" class="article-date">
+  <time datetime="2019-01-09T20:17:48.000Z" itemprop="datePublished">2019-01-09</time>
+</a>
+        
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <h4 id="1-创建自己的包"><a href="#1-创建自己的包" class="headerlink" title="1.创建自己的包"></a>1.创建自己的包</h4><p><strong>创建my-project 目录</strong><br><code>mkdir  my-project</code><br><strong>切换到my-project目录下</strong><br><code>cd   my-project</code><br><strong>创建 package.json文件</strong><br><code>npm  init</code><br><a id="more"></a></p>
+<h4 id="2-安装第三方的包"><a href="#2-安装第三方的包" class="headerlink" title="2.安装第三方的包"></a>2.安装第三方的包</h4><p><strong>全局安装</strong><br>全局安装的包可以在任何目录下使用，一般情况下，提供命令行工具的包推荐全局安装。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install --global http-server</span><br><span class="line">npm install --global gulp-cli</span><br></pre></td></tr></table></figure></p>
+<p><strong>本地安装</strong><br>本地安装的包只能在安装目录下使用。</p>
+<blockquote>
+<p>开发阶段</p>
+</blockquote>
+<p>如果我们只是在开发阶段依赖某个包，则在安装这包时，可以跟上 –save-dev或 -D 选项。</p>
+<p><code>npm install --save-dev gulp</code></p>
+<blockquote>
+<p>产品阶段</p>
+</blockquote>
+<p>如果我们在开发阶段和产品阶段都依赖某个包，则在安装这包时，可以跟上 –save 选项。</p>
+<p><code>npm install --save jquery</code></p>
+<p><strong>删除已安装的包</strong></p>
+<p><code>npm  uninstall  --save  jQuery</code></p>
+<p><strong>更新已安装的包</strong></p>
+<p><code>npm update --save jquery</code></p>
+<p><strong>列出已安装的包</strong></p>
+<p><code>npm list</code></p>
+<p><strong>解决npm下载慢的问题</strong></p>
+<blockquote>
+<p>方法一：使用淘宝定制的 cnpm 命令行工具代替默认的 npm</p>
+</blockquote>
+<p><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+<blockquote>
+<p>方法二：修改npm的下载仓库为淘宝镜像</p>
+</blockquote>
+<p><code>npm config set registry http://registry.npm.taobao.org/</code></p>
+<blockquote>
+<p>如果要发布自己的镜像需要修改回来</p>
+</blockquote>
+<p><code>npm config set registry https://registry.npmjs.org/</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/10/使用npm管理其他的包/" data-id="cjqqdr9f10009mkwo14ui69i7" class="article-share-link">Share</a>
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2019/01/09/gulp的用法/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">gulp的用法</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2019 丁大善人的博客</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://zhwangart.github.io">zhwangart</a></li>
+      <!--
+      <li><a href="/">丁浩瀚</a></li>
+      -->
+    </ul>
+  </div>
+</footer>
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="丁大善人的博客"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">Gallery</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+  <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>
